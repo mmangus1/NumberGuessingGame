@@ -1,5 +1,6 @@
 import random
 import tkinter as tk
+import tkinter.ttk
 from tkinter import Label, Entry, Button, messagebox
 
 
@@ -26,20 +27,23 @@ class MainApplication(tk.Frame):
         self.label = Label(self)
         self.label2 = Label(self)
         self.entry = Entry(self)
-        self.button = Button(self, text="Submit", command=self.genandcomp)
+        self.button = Button(self, text="Submit", command=self.levels)
         self.label3 = Label(self)
 
+        self.difficulty_combo = tkinter.ttk.Combobox(self, values=["Easy", "Normal", "Expert"])
         self.label.config(text="Guess a number")
 
         self.entry.config(validate="key", validatecommand="self.validate_input(self.entry.get())")  # Direct validation
         self.button.config()
         self.label2.config(text="Guess from 1 to 10")
+        self.difficulty_combo.set("Easy")
 
         self.label.pack(side="top", fill="both")
         self.entry.pack(side="top", fill="both")
         self.button.pack(side="top", fill="both")
         self.label2.pack(side="top", fill="both")
         self.label3.pack(side="top", fill="both")
+        self.difficulty_combo.pack(side="top", fill="both")
 
     def validate_input(self, input):
         """
@@ -59,7 +63,7 @@ class MainApplication(tk.Frame):
             self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
             return
 
-    def genandcomp(self) -> None:
+    def genandcomp(self, low, high) -> None:
         """
         Generate and compare guesses, when button is hit
 
@@ -69,7 +73,7 @@ class MainApplication(tk.Frame):
         Returns:
             None
         """
-        randomint: int = random.randint(1, 10)
+        randomint: int = random.randint(low, high)
         self.counter += 1
         try:
             guess: int = int(self.entry.get())
@@ -83,6 +87,17 @@ class MainApplication(tk.Frame):
             self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
 
         self.label3.config(text=f"You made {self.counter} number of guesses")
+
+    def levels(self):
+        self.combovalue = self.difficulty_combo.get()
+        match self.combovalue:
+            case "Easy":
+                self.genandcomp(1,10)
+            case "Normal":
+                self.genandcomp(1,100)
+            case "Expert":
+                self.genandcomp(1,1000)
+
 
 def main() -> None:
     """
@@ -99,6 +114,7 @@ def main() -> None:
         root.title("Number Guessing Game")
         root.geometry("1024x768")
         MainApplication(root).pack(side="top", fill="both", expand=True)
+
         root.mainloop()
     except Exception as e:
         messagebox.showerror(f'Error has occurred {e}')
