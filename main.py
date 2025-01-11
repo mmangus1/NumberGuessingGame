@@ -21,10 +21,13 @@ class MainApplication(tk.Frame):
 
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+        self.counter = 0
+
         self.label = Label(self)
         self.label2 = Label(self)
         self.entry = Entry(self)
         self.button = Button(self, text="Submit", command=self.genandcomp)
+        self.label3 = Label(self)
 
         self.label.config(text="Guess a number")
 
@@ -36,6 +39,7 @@ class MainApplication(tk.Frame):
         self.entry.pack(side="top", fill="both")
         self.button.pack(side="top", fill="both")
         self.label2.pack(side="top", fill="both")
+        self.label3.pack(side="top", fill="both")
 
     def validate_input(self, input):
         """
@@ -66,6 +70,7 @@ class MainApplication(tk.Frame):
             None
         """
         randomint: int = random.randint(1, 10)
+        self.counter += 1
         try:
             guess: int = int(self.entry.get())
             if randomint == guess:
@@ -76,6 +81,8 @@ class MainApplication(tk.Frame):
             self.entry.delete(0, tk.END)
         except (ValueError, TypeError):
             self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
+
+        self.label3.config(text=f"You made {self.counter} number of guesses")
 
 def main() -> None:
     """
