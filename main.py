@@ -7,9 +7,16 @@ class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs) -> None:
         """
         Create graphical interface
-        :param parent:
-        :param args:
-        :param kwargs:
+
+        Parameters:
+            self: Main tkinter frame
+            parent:
+            args:
+            kwargs:
+
+        Returns:
+            None
+
         """
 
         tk.Frame.__init__(self, parent, *args, **kwargs)
@@ -33,6 +40,13 @@ class MainApplication(tk.Frame):
     def validate_input(self, input):
         """
         Validate user input on every key press.
+
+        Parameters:
+            self:
+            input: Input from text entry.
+
+        Returns:
+              None
         """
         if input.isdigit() or input == "":  # Allow empty input for clearing
             self.label2.config(text="")  # Clear previous feedback
@@ -44,7 +58,12 @@ class MainApplication(tk.Frame):
     def genandcomp(self) -> None:
         """
         Generate and compare guesses, when button is hit
-        :return:
+
+        Parameters:
+            self:
+
+        Returns:
+            None
         """
         randomint: int = random.randint(1, 10)
         try:
@@ -61,7 +80,12 @@ class MainApplication(tk.Frame):
 def main() -> None:
     """
     Main function to orchestrate program flow
-    :return:
+
+    Parameters:
+        None
+
+    Returns:
+        None
     """
     try:
         root = tk.Tk()
