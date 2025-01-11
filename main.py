@@ -1,8 +1,3 @@
-# Matthew Mangus
-# Jan. 1, 2025
-# Portfolio Project
-# Number Guessing Game
-
 import random
 import tkinter as tk
 from tkinter import Label, Entry, Button, messagebox
@@ -22,12 +17,11 @@ class MainApplication(tk.Frame):
         self.label = Label(self)
         self.label2 = Label(self)
         self.entry = Entry(self)
-        self.button = Button(self, text="Submit",
-                             command=self.genandcomp
-                             )
+        self.button = Button(self, text="Submit", command=self.genandcomp)
 
         self.label.config(text="Guess a number")
-        self.entry.config()
+
+        self.entry.config(validate="key", validatecommand="self.validate_input(self.entry.get())")  # Direct validation
         self.button.config()
         self.label2.config(text="Guess from 1 to 10")
 
@@ -36,6 +30,17 @@ class MainApplication(tk.Frame):
         self.button.pack(side="top", fill="both")
         self.label2.pack(side="top", fill="both")
 
+    def validate_input(self, input):
+        """
+        Validate user input on every key press.
+        """
+        if input.isdigit() or input == "":  # Allow empty input for clearing
+            self.label2.config(text="")  # Clear previous feedback
+            return
+        else:
+            self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
+            return
+
     def genandcomp(self) -> None:
         """
         Generate and compare guesses, when button is hit
@@ -43,8 +48,6 @@ class MainApplication(tk.Frame):
         """
         randomint: int = random.randint(1, 10)
         try:
-            if int(self.entry.get()) > 10:
-                raise ValueError()
             guess: int = int(self.entry.get())
             if randomint == guess:
                 self.label2.config(text="Guess is correct!")
@@ -53,8 +56,7 @@ class MainApplication(tk.Frame):
                     text=f"Guess again. The number was {randomint}.")
             self.entry.delete(0, tk.END)
         except (ValueError, TypeError):
-            self.label2.config(text="Not an integer from 1 to 10.")
-
+            self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
 
 def main() -> None:
     """
