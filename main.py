@@ -23,9 +23,9 @@ class MainApplication(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
         self.counter = int(0)
-        self.combo_value = None
+        self.combo_value = str(None)
 
-        self.label = Label(self)
+        self.label = tkinter.Label(self)
         self.label2 = Label(self)
         self.entry = Entry(self)
         self.button = Button(self, text="Submit", command=self.levels)
@@ -107,7 +107,7 @@ def main() -> None:
     Main function to orchestrate program flow
 
     Parameters:
-        None
+
 
     Returns:
         None
