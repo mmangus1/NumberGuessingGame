@@ -1,10 +1,10 @@
 import random
 import tkinter as tk
 import tkinter.ttk
-from tkinter import Label, Entry, Button, messagebox
+from tkinter import messagebox
+import tkinter
 
-
-class MainApplication(tk.Frame):
+class MainApplication(tkinter.Frame):
     def __init__(self, parent, *args, **kwargs) -> None:
         """
         Create graphical interface
@@ -25,11 +25,11 @@ class MainApplication(tk.Frame):
         self.counter = int(0)
         self.combo_value = str(None)
 
-        self.label = tkinter.Label(self)
-        self.label2 = Label(self)
-        self.entry = Entry(self)
-        self.button = Button(self, text="Submit", command=self.levels)
-        self.label3 = Label(self)
+        self.label =  tkinter.Label(self)
+        self.label2 = tkinter.Label(self)
+        self.entry = tkinter.Entry(self)
+        self.button = tkinter.Button(self, text="Submit", command=self.levels)
+        self.label3 = tkinter.Label(self)
 
         self.difficulty_combo = tkinter.ttk.Combobox(self, values=["Easy", "Normal", "Expert"])
         self.label.config(text="Guess a number")
@@ -120,7 +120,7 @@ def main() -> None:
 
         root.mainloop()
     except Exception as e:
-        messagebox.showerror(f'Error has occurred {e}')
+        tkinter.messagebox.showerror(f'Error has occurred {e}')
 
 
 if __name__ == "__main__":
