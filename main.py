@@ -64,14 +64,14 @@ class MainApplication(tkinter.Frame):
             self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
             return
 
-    def genandcomp(self, low: int, high: int) -> None:
+    def generate_and_compare(self, low: int, high: int) -> None:
         """
         Generate and compare guesses, when button is hit
 
         Parameters:
             self:
-            low:
-            high:
+            low: lowest integer of guessing range
+            high: highest integer of guessing range
 
         Returns:
             None
@@ -92,14 +92,23 @@ class MainApplication(tkinter.Frame):
         self.label3.config(text=f"You made {self.counter} number of guesses")
 
     def levels(self):
+        """
+        used to define levels and manage level selection
+
+        Parameters:
+
+            self:
+
+        Returns:
+        """
         self.combo_value = self.difficulty_combo.get()
         match self.combo_value:
             case "Easy":
-                self.genandcomp(1,10)
+                self.generate_and_compare(1,10)
             case "Normal":
-                self.genandcomp(1,100)
+                self.generate_and_compare(1,100)
             case "Expert":
-                self.genandcomp(1,1000)
+                self.generate_and_compare(1,1000)
 
 
 def main() -> None:
