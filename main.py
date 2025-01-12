@@ -22,7 +22,8 @@ class MainApplication(tk.Frame):
 
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.counter = 0
+        self.counter = int(0)
+        self.combo_value = None
 
         self.label = Label(self)
         self.label2 = Label(self)
@@ -45,43 +46,45 @@ class MainApplication(tk.Frame):
         self.label3.pack(side="top", fill="both")
         self.difficulty_combo.pack(side="top", fill="both")
 
-    def validate_input(self, input):
+    def validate_input(self, entry_input: str):
         """
         Validate user input on every key press.
 
         Parameters:
             self:
-            input: Input from text entry.
+            entry_input: Input from text entry.
 
         Returns:
               None
         """
-        if input.isdigit() or input == "":  # Allow empty input for clearing
+        if entry_input.isdigit() or entry_input == "":  # Allow empty input for clearing
             self.label2.config(text="")  # Clear previous feedback
             return
         else:
             self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
             return
 
-    def genandcomp(self, low, high) -> None:
+    def genandcomp(self, low: int, high: int) -> None:
         """
         Generate and compare guesses, when button is hit
 
         Parameters:
             self:
+            low:
+            high:
 
         Returns:
             None
         """
-        randomint: int = random.randint(low, high)
+        random_integer: int = random.randint(low, high)
         self.counter += 1
         try:
             guess: int = int(self.entry.get())
-            if randomint == guess:
+            if random_integer == guess:
                 self.label2.config(text="Guess is correct!")
             else:
                 self.label2.config(
-                    text=f"Guess again. The number was {randomint}.")
+                    text=f"Guess again. The number was {random_integer}.")
             self.entry.delete(0, tk.END)
         except (ValueError, TypeError):
             self.label2.config(text="Invalid Input. Enter a number from 1 to 10.")
@@ -89,8 +92,8 @@ class MainApplication(tk.Frame):
         self.label3.config(text=f"You made {self.counter} number of guesses")
 
     def levels(self):
-        self.combovalue = self.difficulty_combo.get()
-        match self.combovalue:
+        self.combo_value = self.difficulty_combo.get()
+        match self.combo_value:
             case "Easy":
                 self.genandcomp(1,10)
             case "Normal":
